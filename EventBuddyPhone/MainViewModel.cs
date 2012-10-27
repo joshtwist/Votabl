@@ -13,32 +13,70 @@ namespace EventBuddyPhone
 {
     public class MainViewModel : ViewModel
     {
-        private SynchronizationContext _sync = SynchronizationContext.Current;
+
+        public async Task<Category> LoadCategory(int categoryId)
+        {
+            var currentCategory = Categories.Single(c => c.Id == categoryId);
+
+            // TODO - load real events
+            currentCategory.Events.Clear();
+            currentCategory.Events.Add(new Event
+            {
+                Title = "Event Title",
+                Subtitle = "Event Subtitle"
+            });
+
+            CurrentCategory = currentCategory;
+            return currentCategory;
+        }
+
+        public async Task<Event> LoadEvent(int eventId)
+        {
+            var currentEvent = CurrentCategory.Events.Single(e => e.Id == eventId);
+
+            // TODO - actually load votables
+            currentEvent.Votables.Clear();
+            currentEvent.Votables.SetRange(Enumerable.Range(0, 12).Select(i => new Votable
+            {
+                EventId = currentEvent.Id,
+                Name = "Votable " + i.ToString()
+            }));
+
+
+            // TODO - calculate maximum
+
+
+            CurrentEvent = currentEvent;
+            return currentEvent;
+        }
 
         private async Task LoginTwitter()
         {
-            await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Twitter);
+            // TODO - ensure login via twitter
+
         }
 
         private async Task UploadNotificationChannel()
         {
             var pushChannel = AcquirePushChannel();
-            var channel = new Channel
-            {
-                ChannelUri = pushChannel.ChannelUri.AbsoluteUri
-            };
-            await App.MobileService.GetTable<Channel>().InsertAsync(channel);
+
+            // TODO - upload push channel
+
         }
 
         private void channel_HttpNotificationReceived(object sender, HttpNotificationEventArgs e)
         {
             string content = new StreamReader(e.Notification.Body).ReadToEnd();
             int eventId = int.Parse(content);
+
+            // TODO - handle push notification
+            /*
             if (App.ViewModel.CurrentEvent.Id != eventId) return;
             _sync.Post(async ignored =>
             {
                 await App.ViewModel.LoadEvent(eventId);
             }, null);
+             */
         }
 
         public static HttpNotificationChannel CurrentChannel { get; private set; }
@@ -84,43 +122,6 @@ namespace EventBuddyPhone
             set { this.SetProperty(ref _currentEvent, value); }
         }
 
-        public async Task<Category> LoadCategory(int categoryId)
-        {
-            var currentCategory = Categories.Single(c => c.Id == categoryId);
-            // TODO - load events
-            //currentCategory.Events.Clear();
-            //currentCategory.Events.Add(new Event
-            //{
-            //    Title = "Event Title",
-            //    Subtitle = "Event Subtitle"
-            //});
-
-            var events = await App.MobileService.GetTable<Event>()
-                .Where(e => e.CategoryId == categoryId).ToEnumerableAsync();
-            currentCategory.Events.SetRange(events);
-            CurrentCategory = currentCategory;
-            return currentCategory;
-        }
-
-        public async Task<Event> LoadEvent(int eventId)
-        {
-            var currentEvent = CurrentCategory.Events.Single(e => e.Id == eventId);
-            // TODO - actually load votables
-            //currentEvent.Votables.Clear();
-            //currentEvent.Votables.SetRange(Enumerable.Range(0,12).Select(i => new Votable
-            //{
-            //    EventId = currentEvent.Id,
-            //    Name = "Votable " + i.ToString()
-            //}));
-
-            var votables = await App.MobileService.GetTable<Votable>()
-                .Where(v => v.EventId == eventId).ToEnumerableAsync();
-            currentEvent.Votables.SetRange(votables);
-            currentEvent.SetMaximum();
-            CurrentEvent = currentEvent;
-            return currentEvent;
-        }
-
         private bool _initialized = false;
 
         public async void Initialize()
@@ -133,14 +134,11 @@ namespace EventBuddyPhone
             _categories.Add(new Category { Id = 2, Title = "Garage Sales", Image = "http://bacc.cc/wp-content/uploads/2012/05/garage-sale.jpg", Subtitle = "Buy some crap" });
             _categories.Add(new Category { Id = 3, Title = "Presentations", Image = "http://www.hearsaycommunications.com/images/presentation.jpg", Subtitle = "Enjoy beer at a festival" });
 
-            if (App.MobileService.CurrentUser == null)
-            {
-                await LoginTwitter();
-            }
+            await LoginTwitter();
 
             await UploadNotificationChannel();
-
-            
         }
+
+        private SynchronizationContext _sync = SynchronizationContext.Current;
     }
 }

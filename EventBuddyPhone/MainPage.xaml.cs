@@ -74,17 +74,10 @@ namespace EventBuddyPhone
 
         private async void btnSubscribe_Click_1(object sender, EventArgs e)
         {
-            // TODO - subscribe to events
-            foreach (var subscription in _subscriptions.ToArray())
-            {
-                await App.MobileService.GetTable<UserCategory>().InsertAsync(new UserCategory
-                {
-                    CategoryId = subscription.Category.Id
-                });
+            // TODO - subscribe to events by enumerating _subscriptions collection
+            // and uncheck the checkboxes
 
-                subscription.CheckBox.IsChecked = false;
-                _subscriptions.Remove(subscription);
-            }
+
         }
     }
 }

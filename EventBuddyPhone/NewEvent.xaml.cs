@@ -30,32 +30,19 @@ namespace EventBuddyPhone
             txtVotable.Focus();
         }
 
-        private async void btnSave_Click_1(object sender, EventArgs e)
-        {
-            // TODO - save data
-            var newEvent = new Event
-            {
-                CategoryId = App.ViewModel.CurrentCategory.Id,
-                Title = txtTitle.Text,
-                Subtitle = txtSubtitle.Text
-            };
-            await App.MobileService.GetTable<Event>().InsertAsync(newEvent);
-
-            foreach (var votableName in listVotables.Items.OfType<String>())
-            {
-                var votable = new Votable {
-                    EventId = newEvent.Id,
-                    Name = votableName
-                };
-                await App.MobileService.GetTable<Votable>().InsertAsync(votable);
-            }
-
-            this.NavigationService.GoBack();
-        }
-
         private void btnCancel_Click_1(object sender, EventArgs e)
         {
             this.NavigationService.GoBack();
         }
+
+        private async void btnSave_Click_1(object sender, EventArgs e)
+        {
+            // TODO - save new event and votables
+
+
+            this.NavigationService.GoBack();
+        }
+
+
     }
 }

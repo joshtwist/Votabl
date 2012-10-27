@@ -32,12 +32,9 @@ namespace EventBuddyPhone
             button.IsEnabled = false;
             Votable votable = (Votable)button.DataContext;
 
-            // TODO submit the vote
-            JObject vote = new JObject();
-            vote.Add("EventId", votable.EventId);
-            vote.Add("VotableId", votable.Id);
+            // TODO submit the vote with EventId and VotableId
 
-            await App.MobileService.GetTable("Vote").InsertAsync(vote);
+
             button.IsEnabled = true;
         }
     }

@@ -10,6 +10,11 @@ using System.Threading.Tasks;
 
 namespace EventBuddyPhone
 {
+    // TODO - create UserCategory class
+
+
+
+
     public class Event : ViewModel
     {
         private int _id;
@@ -70,38 +75,10 @@ namespace EventBuddyPhone
         }
     }
 
-    public class UserCategory
-    {
-        public int Id { get; set; }
-        public int CategoryId { get; set; }
-    }
+    
 
-    public class Channel : ViewModel
-    {
-        private int _id;
+    // TODO - create Channel class with ChannelUri and DeviceType = 'WP8'
 
-        public int Id
-        {
-            get { return this._id; }
-            set { this.SetProperty(ref _id, value); }
-        }
-
-        private string _channelUri;
-
-        public string ChannelUri
-        {
-            get { return this._channelUri; }
-            set { this.SetProperty(ref _channelUri, value); }
-        }
-
-        private string _deviceType = "WP8";
-
-        public string DeviceType
-        {
-            get { return this._deviceType; }
-            set { this.SetProperty(ref _deviceType, value); }
-        }
-    }
 
     public class Category : ViewModel
     {

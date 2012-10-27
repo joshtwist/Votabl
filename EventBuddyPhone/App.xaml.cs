@@ -13,10 +13,8 @@ namespace EventBuddyPhone
 {
     public partial class App : Application
     {
-        public static MobileServiceClient MobileService = new MobileServiceClient(
-            "https://mobilesolutionsparti.azure-mobile.net/",
-            "yMfhYKyxzIicJwmSeJbajPUUPDqEPs51"
-        );
+        // TODO - Add Mobile Service client
+
 
         private static MainViewModel _viewModel;
 
