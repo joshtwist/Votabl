@@ -1,0 +1,78 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="EventBuddyPhone.EventView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+
+    <!--LayoutRoot contains the root grid where all other page content is placed-->
+    <Grid x:Name="LayoutRoot">
+        <phone:Panorama Title="{Binding CurrentEvent.Title}">
+
+            <!--Panorama item one-->
+            <phone:PanoramaItem Header="details">
+                <StackPanel>
+                    <TextBlock Text="Title" Margin="12,0,0,0" />
+                    <TextBlock Text="{Binding CurrentEvent.Title}" FontSize="50" />
+                    <TextBlock Text="SubTitle" Margin="12,0,0,0" />
+                    <TextBlock Text="{Binding CurrentEvent.Subtitle}" FontSize="50" />
+                    <TextBlock Text="Category" Margin="12,0,0,0" />
+                    <TextBlock Text="{Binding CurrentCategory.Title}" FontSize="50" />
+
+                </StackPanel>
+            </phone:PanoramaItem>
+
+            <!--Panorama item two-->
+            <phone:PanoramaItem Header="votables">
+                <Grid x:Name="votablesGrid">
+                    <ScrollViewer>
+                        <ItemsControl ItemsSource="{Binding CurrentEvent.Votables}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button x:Name="btnVote"
+                                            Grid.RowSpan="2" Click="btnVote_Click_1"
+                                            Width="100" Height="100">
+                                            <TextBlock Text="{Binding Count}" />
+                                        </Button>
+
+                                        <TextBlock Text="{Binding Name}"
+                                               Grid.Column="1"
+                                               VerticalAlignment="Bottom"
+                                               HorizontalAlignment="Left"
+                                               Margin="5"/>
+                                        <ProgressBar Grid.Row="2" 
+                                                 Grid.Column="1"
+                                                 VerticalAlignment="Top"
+                                                 Value="{Binding Count}"
+                                                 Maximum="{Binding ElementName=votablesGrid, Path=DataContext.CurrentEvent.Maximum}"/>
+
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </phone:PanoramaItem>
+        </phone:Panorama>
+    </Grid>
+
+</phone:PhoneApplicationPage>
