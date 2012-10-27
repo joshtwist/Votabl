@@ -29,7 +29,13 @@ public static class Extensions
             var oldIndex = collection.IndexOf(clones[i]);
             if (i != oldIndex)
             {
-                collection.Move(oldIndex, i);
+                // WP ItemsControl doesn't like .Move - so removing and adding in a lazy way
+                // collection.Move(oldIndex, i);
+                var itemA = collection[i];
+                var itemB = collection[oldIndex];
+
+                collection[i] = itemB;
+                collection[oldIndex] = itemA;
             }
         }
     }

@@ -28,28 +28,30 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ItemsControl ItemsSource="{Binding CurrentCategory.Events}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding Title}" FontSize="30" VerticalAlignment="Bottom" />
-                            <TextBlock Text="{Binding Subtitle}" Grid.Row="2" VerticalAlignment="Top"/>
-                            <Button Grid.Column="1" Grid.RowSpan="2" x:Name="btnSelectEvent"
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding CurrentCategory.Events}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="{Binding Title}" FontSize="30" VerticalAlignment="Bottom" />
+                                <TextBlock Text="{Binding Subtitle}" Grid.Row="2" VerticalAlignment="Top"/>
+                                <Button Grid.Column="1" Grid.RowSpan="2" x:Name="btnSelectEvent"
                                     Click="btnSelectEvent_Click_1" BorderThickness="0" Padding="0">
-                                <Image Source="/Assets/next.png" />
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                    <Image Source="/Assets/next.png" />
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>

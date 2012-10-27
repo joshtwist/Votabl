@@ -30,12 +30,15 @@ namespace EventBuddyPhone
             await App.MobileService.GetTable<Channel>().InsertAsync(channel);
         }
 
-        private async void channel_HttpNotificationReceived(object sender, HttpNotificationEventArgs e)
+        private void channel_HttpNotificationReceived(object sender, HttpNotificationEventArgs e)
         {
             string content = new StreamReader(e.Notification.Body).ReadToEnd();
             int eventId = int.Parse(content);
             if (App.ViewModel.CurrentEvent.Id != eventId) return;
-            await App.ViewModel.LoadEvent(eventId);
+            _sync.Post(async ignored =>
+            {
+                await App.ViewModel.LoadEvent(eventId);
+            }, null);
         }
 
         public static HttpNotificationChannel CurrentChannel { get; private set; }
@@ -49,8 +52,10 @@ namespace EventBuddyPhone
                 channel = new HttpNotificationChannel("MyPushChannel");
                 channel.Open();
                 channel.BindToShellTile();
-                channel.HttpNotificationReceived += channel_HttpNotificationReceived;
+                channel.BindToShellToast();
             }
+
+            channel.HttpNotificationReceived += channel_HttpNotificationReceived;
 
             return channel;   
         }

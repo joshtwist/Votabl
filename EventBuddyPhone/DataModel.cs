@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,6 +46,7 @@ namespace EventBuddyPhone
 
         private int _maximum;
 
+        [IgnoreDataMember]
         public int Maximum
         {
             get { return this._maximum; }
@@ -53,6 +55,7 @@ namespace EventBuddyPhone
 
         private ObservableCollection<Votable> _votables = new ObservableCollection<Votable>();
 
+        [IgnoreDataMember]
         public ObservableCollection<Votable> Votables
         {
             get { return this._votables; }
@@ -65,6 +68,12 @@ namespace EventBuddyPhone
             Maximum = Votables.Max(v => v.Count);
             Votables.SortDesc(v => v.Count);
         }
+    }
+
+    public class UserCategory
+    {
+        public int Id { get; set; }
+        public int CategoryId { get; set; }
     }
 
     public class Channel : ViewModel
@@ -165,24 +174,10 @@ namespace EventBuddyPhone
 
         private int _count;
 
-        [DataMemberJsonConverter(ConverterType = typeof(OneWayConverter))]
         public int Count
         {
             get { return this._count; }
             set { this.SetProperty(ref _count, value); }
-        }
-    }
-
-    public class OneWayConverter : IDataMemberJsonConverter
-    {
-        public object ConvertFromJson(JToken value)
-        {
-            return value.ToObject<object>();
-        }
-
-        JToken IDataMemberJsonConverter.ConvertToJson(object instance)
-        {
-            return null;
         }
     }
 }

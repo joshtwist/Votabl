@@ -37,20 +37,54 @@ namespace EventBuddyPhone
             this.NavigationService.Navigate(new Uri(uri, UriKind.Relative));
         }
 
-        // Sample code for building a localized ApplicationBar
-        //private void BuildLocalizedApplicationBar()
-        //{
-        //    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-        //    ApplicationBar = new ApplicationBar();
+        private void chkSubscribe_Checked_1(object sender, RoutedEventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            Category cat = (Category)cb.DataContext;
 
-        //    // Create a new button and set the text value to the localized string from AppResources.
-        //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-        //    appBarButton.Text = AppResources.AppBarButtonText;
-        //    ApplicationBar.Buttons.Add(appBarButton);
+            CategoryCheckBox ccb = new CategoryCheckBox { Category = cat, CheckBox = cb };
 
-        //    // Create a new menu item with the localized string from AppResources.
-        //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-        //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-        //}
+            if (cb.IsChecked.GetValueOrDefault() && !_subscriptions.Contains(ccb))
+            {
+                _subscriptions.Add(ccb);
+            }
+            else if (!cb.IsChecked.GetValueOrDefault() && _subscriptions.Contains(ccb))
+            {
+                _subscriptions.Remove(ccb);
+            }
+        }
+
+        class CategoryCheckBox
+        {
+            public Category Category { get; set; }
+            public CheckBox CheckBox { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                var target = obj as CategoryCheckBox;
+                if (target == null)
+                {
+                    return false;
+                }
+                return Object.Equals(Category, target.Category);
+            }
+        }
+
+        private List<CategoryCheckBox> _subscriptions = new List<CategoryCheckBox>();
+
+        private async void btnSubscribe_Click_1(object sender, EventArgs e)
+        {
+            // TODO - subscribe to events
+            foreach (var subscription in _subscriptions.ToArray())
+            {
+                await App.MobileService.GetTable<UserCategory>().InsertAsync(new UserCategory
+                {
+                    CategoryId = subscription.Category.Id
+                });
+
+                subscription.CheckBox.IsChecked = false;
+                _subscriptions.Remove(subscription);
+            }
+        }
     }
 }

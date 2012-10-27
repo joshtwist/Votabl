@@ -17,19 +17,6 @@
     <Grid x:Name="LayoutRoot">
         <phone:Panorama Title="{Binding CurrentEvent.Title}">
 
-            <!--Panorama item one-->
-            <phone:PanoramaItem Header="details">
-                <StackPanel>
-                    <TextBlock Text="Title" Margin="12,0,0,0" />
-                    <TextBlock Text="{Binding CurrentEvent.Title}" FontSize="50" />
-                    <TextBlock Text="SubTitle" Margin="12,0,0,0" />
-                    <TextBlock Text="{Binding CurrentEvent.Subtitle}" FontSize="50" />
-                    <TextBlock Text="Category" Margin="12,0,0,0" />
-                    <TextBlock Text="{Binding CurrentCategory.Title}" FontSize="50" />
-
-                </StackPanel>
-            </phone:PanoramaItem>
-
             <!--Panorama item two-->
             <phone:PanoramaItem Header="votables">
                 <Grid x:Name="votablesGrid">
@@ -72,6 +59,20 @@
                     </ScrollViewer>
                 </Grid>
             </phone:PanoramaItem>
+
+            <!--Panorama item one-->
+            <phone:PanoramaItem Header="details">
+                <StackPanel>
+                    <TextBlock Text="Title" Margin="12,0,0,0" />
+                    <TextBlock Text="{Binding CurrentEvent.Title}" FontSize="50" />
+                    <TextBlock Text="SubTitle" Margin="12,0,0,0" />
+                    <TextBlock Text="{Binding CurrentEvent.Subtitle}" FontSize="50" />
+                    <TextBlock Text="Category" Margin="12,0,0,0" />
+                    <TextBlock Text="{Binding CurrentCategory.Title}" FontSize="50" />
+
+                </StackPanel>
+            </phone:PanoramaItem>
+
         </phone:Panorama>
     </Grid>
 
