@@ -89,13 +89,7 @@ namespace EventBuddyPhone
             set { this.SetProperty(ref _eventId, value); }
         }
 
-        private int _count;
-
-        public int Count
-        {
-            get { return this._count; }
-            set { this.SetProperty(ref _count, value); }
-        }
+        // TODO - add count property
     }
 
 
