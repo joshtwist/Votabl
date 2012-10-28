@@ -13,18 +13,17 @@ namespace EventBuddyPhone
 {
     public class MainViewModel : ViewModel
     {
-
         public async Task<Category> LoadCategory(int categoryId)
         {
             var currentCategory = Categories.Single(c => c.Id == categoryId);
 
             // TODO - load real events
-            currentCategory.Events.Clear();
-            currentCategory.Events.Add(new Event
+            currentCategory.Events.SetRange(Enumerable.Range(0, 4).Select(i => new Event
             {
-                Title = "Event Title",
+                Id = i,
+                Title = string.Format("Event {0}", i),
                 Subtitle = "Event Subtitle"
-            });
+            }));
 
             CurrentCategory = currentCategory;
             return currentCategory;
@@ -35,18 +34,15 @@ namespace EventBuddyPhone
             var currentEvent = CurrentCategory.Events.Single(e => e.Id == eventId);
 
             // TODO - actually load votables
-            currentEvent.Votables.Clear();
-            currentEvent.Votables.SetRange(Enumerable.Range(0, 12).Select(i => new Votable
+            currentEvent.Votables.SetRange(Enumerable.Range(0, 5).Select(i => new Votable
             {
+                Id = i,
                 EventId = currentEvent.Id,
-                Name = "Votable " + i.ToString()
+                Name = string.Format("Votable {0}", i)
             }));
 
-
-            // TODO - calculate maximum
-
-
             CurrentEvent = currentEvent;
+            CurrentEvent.SetMaximum();
             return currentEvent;
         }
 
@@ -71,7 +67,7 @@ namespace EventBuddyPhone
 
             // TODO - handle push notification
             /*
-            if (App.ViewModel.CurrentEvent.Id != eventId) return;
+            if (App.ViewModel.CurrentEvent == null || App.ViewModel.CurrentEvent.Id != eventId) return;
             _sync.Post(async ignored =>
             {
                 await App.ViewModel.LoadEvent(eventId);
