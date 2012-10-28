@@ -10,11 +10,6 @@ using System.Threading.Tasks;
 
 namespace EventBuddyPhone
 {
-    // TODO - create UserCategory class
-
-
-
-
     public class Event : ViewModel
     {
         private int _id;
@@ -49,15 +44,6 @@ namespace EventBuddyPhone
             set { this.SetProperty(ref _categoryId, value); }
         }
 
-        private int _maximum;
-
-        [IgnoreDataMember]
-        public int Maximum
-        {
-            get { return this._maximum; }
-            set { this.SetProperty(ref _maximum, value); }
-        }
-
         private ObservableCollection<Votable> _votables = new ObservableCollection<Votable>();
 
         [IgnoreDataMember]
@@ -67,17 +53,50 @@ namespace EventBuddyPhone
             set { this.SetProperty(ref _votables, value); }
         }
 
+        // TODO - add maximum count property
+
+
         internal void SetMaximum()
         {
-            if (Votables.Count == 0) return;
-            Maximum = Votables.Max(v => v.Count);
-            Votables.SortDesc(v => v.Count);
+            // TODO - implement maximum count
         }
     }
 
-    
 
-    // TODO - create Channel class with ChannelUri and DeviceType = 'WP8'
+    public class Votable : ViewModel
+    {
+        private int _id;
+
+        public int Id
+        {
+            get { return this._id; }
+            set { this.SetProperty(ref _id, value); }
+        }
+
+        private string _name;
+
+        public string Name
+        {
+            get { return this._name; }
+            set { this.SetProperty(ref _name, value); }
+        }
+
+        private int _eventId;
+
+        public int EventId
+        {
+            get { return this._eventId; }
+            set { this.SetProperty(ref _eventId, value); }
+        }
+
+        private int _count;
+
+        public int Count
+        {
+            get { return this._count; }
+            set { this.SetProperty(ref _count, value); }
+        }
+    }
 
 
     public class Category : ViewModel
@@ -123,38 +142,5 @@ namespace EventBuddyPhone
         }
     }
 
-    public class Votable : ViewModel
-    {
-        private int _id;
 
-        public int Id
-        {
-            get { return this._id; }
-            set { this.SetProperty(ref _id, value); }
-        }
-
-        private string _name;
-
-        public string Name
-        {
-            get { return this._name; }
-            set { this.SetProperty(ref _name, value); }
-        }
-
-        private int _eventId;
-
-        public int EventId
-        {
-            get { return this._eventId; }
-            set { this.SetProperty(ref _eventId, value); }
-        }
-
-        private int _count;
-
-        public int Count
-        {
-            get { return this._count; }
-            set { this.SetProperty(ref _count, value); }
-        }
-    }
 }
