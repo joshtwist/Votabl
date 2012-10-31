@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace EventBuddyPhone
 {
+    [DataTable(Name="events")]
     public class Event : ViewModel
     {
         private int _id;
@@ -22,6 +23,7 @@ namespace EventBuddyPhone
 
         private string _title;
 
+        [DataMember(Name = "title")]
         public string Title
         {
             get { return this._title; }
@@ -30,6 +32,7 @@ namespace EventBuddyPhone
 
         private string _subtitle;
 
+        [DataMember(Name = "subtitle")]
         public string Subtitle
         {
             get { return this._subtitle; }
@@ -38,6 +41,7 @@ namespace EventBuddyPhone
 
         private int _categoryId;
 
+        [DataMember(Name = "categoryId")]
         public int CategoryId
         {
             get { return this._categoryId; }
@@ -62,7 +66,7 @@ namespace EventBuddyPhone
         }
     }
 
-
+    [DataTable(Name = "votables")]
     public class Votable : ViewModel
     {
         private int _id;
@@ -75,6 +79,7 @@ namespace EventBuddyPhone
 
         private string _name;
 
+        [DataContract(Name = "name")]
         public string Name
         {
             get { return this._name; }
@@ -83,6 +88,7 @@ namespace EventBuddyPhone
 
         private int _eventId;
 
+        [DataContract(Name = "eventId")]
         public int EventId
         {
             get { return this._eventId; }
@@ -91,7 +97,6 @@ namespace EventBuddyPhone
 
         // TODO - add count property
     }
-
 
     public class Category : ViewModel
     {
