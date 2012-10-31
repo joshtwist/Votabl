@@ -127,8 +127,8 @@ namespace EventBuddyPhone
 
             _categories.Clear();
             _categories.Add(new Category { Id = 1, Title = "Beer Fest", Image = "http://homebrewfanatic.com/wp-content/uploads/2008/03/beer-fest.jpg", Subtitle = "Enjoy beer at a festival" });
-            _categories.Add(new Category { Id = 2, Title = "Garage Sales", Image = "http://bacc.cc/wp-content/uploads/2012/05/garage-sale.jpg", Subtitle = "Buy some crap" });
-            _categories.Add(new Category { Id = 3, Title = "Presentations", Image = "http://www.hearsaycommunications.com/images/presentation.jpg", Subtitle = "Enjoy beer at a festival" });
+            _categories.Add(new Category { Id = 2, Title = "Garage Sales", Image = "http://bacc.cc/wp-content/uploads/2012/05/garage-sale.jpg", Subtitle = "Buy some trash" });
+            _categories.Add(new Category { Id = 3, Title = "Presentations", Image = "http://www.hearsaycommunications.com/images/presentation.jpg", Subtitle = "Watch a cool presentation" });
 
             await LoginTwitter();
 
