@@ -9,7 +9,7 @@ function insert(item, user, request) {
     });
 }
 function sendNotification(item, user) {
-    var sql = "SELECT DISTINCT c.channelUri, c.deviceType FROM Channel c " +
+    var sql = "SELECT DISTINCT c.channelUri, c.deviceType FROM channels c " +
     "INNER JOIN userCategories u ON u.userId = c.userId AND u.categoryId = ?";
     mssql.query(sql, [item.categoryId], {
         success: function(results) {

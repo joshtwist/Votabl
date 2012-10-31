@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EventBuddyPhone
 {
-    [DataTable(Name="events")]
+    [DataTable(Name = "events")]
     public class Event : ViewModel
     {
         private int _id;

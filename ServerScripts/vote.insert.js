@@ -10,8 +10,8 @@ function insert(item, user, request) {
 
 function sendNotifications(item, user) {
     // find all users who have voted on this event
-    var sql = "SELECT DISTINCT c.channelUri, c.deviceType FROM Channel c " +
-    "INNER JOIN Vote v ON c.userId = v.userId AND v.eventId = ?"  
+    var sql = "SELECT DISTINCT c.channelUri, c.deviceType FROM channels c " +
+    "INNER JOIN votes v ON c.userId = v.userId AND v.eventId = ?"  
     mssql.query(sql, [item.eventId], {
         success: function(results) {
             var wnsChannels = results.

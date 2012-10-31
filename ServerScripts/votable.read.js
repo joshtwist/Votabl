@@ -6,7 +6,7 @@ function read(query, user, request) {
                 request.respond();
                 return;
             }
-            var sql = "SELECT COUNT(Id) as count, VotableId FROM Vote WHERE EventId = ? GROUP BY votableId"; 
+            var sql = "SELECT COUNT(Id) as count, votableId FROM votes WHERE eventId = ? GROUP BY votableId"; 
             // we know we only query for a single event id
             mssql.query(sql, [votables[0].eventId],{
                 success: function(votes) {
