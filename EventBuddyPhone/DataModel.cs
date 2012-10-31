@@ -79,7 +79,7 @@ namespace EventBuddyPhone
 
         private string _name;
 
-        [DataContract(Name = "name")]
+        [DataMember(Name = "name")]
         public string Name
         {
             get { return this._name; }
@@ -88,7 +88,7 @@ namespace EventBuddyPhone
 
         private int _eventId;
 
-        [DataContract(Name = "eventId")]
+        [DataMember(Name = "eventId")]
         public int EventId
         {
             get { return this._eventId; }
