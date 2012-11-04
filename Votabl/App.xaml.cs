@@ -15,8 +15,8 @@ namespace EventBuddyPhone
     {
         // TODO - Add Mobile Service client
         public static MobileServiceClient MobileService = new MobileServiceClient(
-            "https://votable.azure-mobile.net/",
-            "pXFmZgJeZXmODIqAbNcBHprtIBYbeo58"
+            "YOUR MOBILE SERVICE URL HERE",
+            "YOUR APPLICATION KEY HERE"
         );
 
         private static MainViewModel _viewModel;
