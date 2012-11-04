@@ -1,5 +1,6 @@
 ﻿using Microsoft.Phone.Notification;
 using Microsoft.WindowsAzure.MobileServices;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,12 +19,10 @@ namespace EventBuddyPhone
             var currentCategory = Categories.Single(c => c.Id == categoryId);
 
             // TODO - load real events
-            currentCategory.Events.SetRange(Enumerable.Range(0, 4).Select(i => new Event
-            {
-                Id = i,
-                Title = string.Format("Event {0}", i),
-                Subtitle = "Event Subtitle"
-            }));
+            var events = await App.MobileService.GetTable<Event>().Where(
+                e => e.CategoryId == categoryId).ToEnumerableAsync();
+
+            currentCategory.Events.SetRange(events);
 
             CurrentCategory = currentCategory;
             return currentCategory;
@@ -34,12 +33,12 @@ namespace EventBuddyPhone
             var currentEvent = CurrentCategory.Events.Single(e => e.Id == eventId);
 
             // TODO - actually load votables
-            currentEvent.Votables.SetRange(Enumerable.Range(0, 5).Select(i => new Votable
-            {
-                Id = i,
-                EventId = currentEvent.Id,
-                Name = string.Format("Votable {0}", i)
-            }));
+            var votables = await App.MobileService.GetTable<Votable>()
+                .Where(v => v.EventId == eventId).ToEnumerableAsync();
+
+            currentEvent.Votables.SetRange(votables);
+
+            
 
             CurrentEvent = currentEvent;
             CurrentEvent.SetMaximum();
@@ -49,7 +48,7 @@ namespace EventBuddyPhone
         private async Task LoginTwitter()
         {
             // TODO - ensure login via twitter
-
+            await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Twitter);
         }
 
         private async Task UploadNotificationChannel()
@@ -57,6 +56,11 @@ namespace EventBuddyPhone
             var pushChannel = AcquirePushChannel();
 
             // TODO - upload push channel
+            var channel = new JObject();
+            channel.Add("channelUri", pushChannel.ChannelUri.AbsoluteUri);
+            channel.Add("deviceType", "WP8");
+
+            await App.MobileService.GetTable("channels").InsertAsync(channel);
 
         }
 
@@ -66,13 +70,13 @@ namespace EventBuddyPhone
             int eventId = int.Parse(content);
 
             // TODO - handle push notification
-            /*
+           
             if (App.ViewModel.CurrentEvent == null || App.ViewModel.CurrentEvent.Id != eventId) return;
             _sync.Post(async ignored =>
             {
                 await App.ViewModel.LoadEvent(eventId);
             }, null);
-             */
+             
         }
 
         public static HttpNotificationChannel CurrentChannel { get; private set; }

@@ -10,6 +10,18 @@ using System.Threading.Tasks;
 
 namespace EventBuddyPhone
 {
+    [DataTable(Name = "userCategories")]
+    public class UserCategory
+    {
+        public int Id { get; set; }
+
+        [DataMember(Name = "categoryId")]
+        public int CategoryId { get; set; }
+
+        [DataMember(Name = "userId")]
+        public string UserId { get; set; }
+    }
+
     [DataTable(Name = "events")]
     public class Event : ViewModel
     {
@@ -58,11 +70,24 @@ namespace EventBuddyPhone
         }
 
         // TODO - add maximum count property
+        private int _maximum;
+
+        public int Maximum
+        {
+            get { return this._maximum; }
+            set { this.SetProperty(ref _maximum, value); }
+        }
 
 
         internal void SetMaximum()
         {
-            // TODO - implement maximum count
+            if (Votables.Count == 0) {
+                Maximum = 0;
+                return;
+            }
+
+            Maximum = Votables.Max(v => v.Count);
+            Votables.SortDesc(v => v.Count);
         }
     }
 
@@ -96,6 +121,15 @@ namespace EventBuddyPhone
         }
 
         // TODO - add count property
+
+        private int _count;
+
+        [DataMember(Name = "count")]
+        public int Count
+        {
+            get { return this._count; }
+            set { this.SetProperty(ref _count, value); }
+        }
     }
 
     public class Category : ViewModel

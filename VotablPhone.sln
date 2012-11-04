@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotablPhone", "EventBuddyPhone\VotablPhone.csproj", "{E6E645C2-FDC5-4694-81D7-4DAAD60463CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotablPhone", Votabl\VotablPhone.csproj", "{E6E645C2-FDC5-4694-81D7-4DAAD60463CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

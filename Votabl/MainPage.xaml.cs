@@ -76,7 +76,18 @@ namespace EventBuddyPhone
         {
             // TODO - subscribe to events by enumerating _subscriptions collection
             // and uncheck the checkboxes
+            foreach (var sub in _subscriptions.ToArray())
+            {
+                var uc = new UserCategory
+                {
+                    CategoryId = sub.Category.Id,
+                    UserId = App.MobileService.CurrentUser.UserId
+                };
 
+                await App.MobileService.GetTable<UserCategory>().InsertAsync(uc);
+                sub.CheckBox.IsChecked = false;
+                _subscriptions.Remove(sub);
+            }
 
         }
     }

@@ -38,11 +38,28 @@ namespace EventBuddyPhone
         private async void btnSave_Click_1(object sender, EventArgs e)
         {
             // TODO - save new event and votables
+            var newEvent = new Event
+            {
+                Title = txtTitle.Text,
+                Subtitle = txtSubtitle.Text,
+                CategoryId = App.ViewModel.CurrentCategory.Id
+            };
 
+            await App.MobileService.GetTable<Event>().InsertAsync(newEvent);
+
+            foreach (var votableName in listVotables.Items.OfType<String>())
+            {
+                var votable = new Votable
+                {
+                    Name = votableName,
+                    EventId = newEvent.Id
+                };
+
+                await App.MobileService.GetTable<Votable>().InsertAsync(votable);
+            }
 
             this.NavigationService.GoBack();
         }
-
 
     }
 }

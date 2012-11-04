@@ -12,7 +12,6 @@ function read(query, user, request) {
                 success: function(votes) {
                     votes.forEach(function(vote) {
                         var thisVotable = votables.filter(function(v) { return v.id == vote.votableId });
-                        console.log(vote, thisVotable);
                         if (thisVotable.length > 0)
                         {
                             thisVotable[0].count = vote.count;
